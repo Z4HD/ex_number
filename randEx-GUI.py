@@ -21,7 +21,8 @@ from kivy.logger import Logger
 from kivy.uix.boxlayout import BoxLayout
 
 kivy.require('1.10.0')
-versionStr = "v250"
+versionStr = "v251"
+Logger.info("randEX: Version: "+versionStr)
 
 # 加载设置和初始化
 rCount = 1
@@ -44,34 +45,17 @@ try:
     with open('config.json', mode='r', encoding='UTF-8') as f2:
         conf = json.loads(f2.read())
 except FileNotFoundError:
-    Logger.critical("Config Loader: 无法读取config.json，文件可能不存在或被其他程序占用。")
+    Logger.critical("conf Loader: 无法读取config.json，文件可能不存在或被其他程序占用。")
     input('按任意键退出...')
     raise
 except json.JSONDecodeError:
-    Logger.critical("Config Loader: 无法加载config.json，文件可能存在语法错误。")
+    Logger.critical("conf Loader: 无法加载config.json，文件可能存在语法错误。")
     input('按任意键退出...')
     raise
 else:
-    Logger.info("Config Loader: config loaded!")
+    Logger.info("conf Loader: config loaded!")
 
 # Random tools
-
-
-def getRandomInt(a, b, noInts):
-    bol = True
-    while bol:
-        re = random.randint(a, b)
-        if noInts:
-            for noInt in noInts:
-                if re == noInt:
-                    bol = True
-                    break
-            else:
-                bol = False
-        else:
-            bol = False
-    return re
-
 
 class ZRandom():
     '''
@@ -156,10 +140,10 @@ class MainWidget(BoxLayout):
         try:
             self.zr = ZRandom(conf['RandomProvider'])
         except KeyError as e:
-            Logger.critical("ZRandom :" + pprint.pformat(e))
+            Logger.critical("ZRandom: " + pprint.pformat(e))
             raise
         if self.zr.avoidList:
-            Logger.info('ZRandom :%s has been removed.' % self.zr.avoidList)
+            Logger.info('ZRandom: %s has been removed.' % self.zr.avoidList)
         # self.debugMsgBox.text = pprint.pformat(self.zr.HighlightsSettings)
 
     global conf
@@ -168,8 +152,8 @@ class MainWidget(BoxLayout):
 
     def _on_key_down(self, keyboard, keycode, text, modifiers, *args):
         global rCount
-        Logger.debug("KBC :keyboard: %s" % keyboard)
-        Logger.debug("KBC :keycode: %s" % keycode)
+        Logger.debug("KBC: keyboard: %s" % keyboard)
+        Logger.debug("KBC: keycode: %s" % keycode)
         # q & esc to exit
         if keycode == 113 or keycode == 27:
             try:
@@ -183,11 +167,11 @@ class MainWidget(BoxLayout):
         # enter to start a rand process
         elif keycode == 271 or keycode == 13 or keycode == 32:
             if rCount != 1:
-                Logger.info("KBC :a rand_ex() process already running")
+                Logger.info("KBC: a rand_ex() process already running")
                 return
             else:
                 Logger.info(
-                    "KBC :a rand_ex() process start by <Enter> or <Space>")
+                    "KBC: a rand_ex() process start by <Enter> or <Space>")
                 self.startBtnClick()
         elif keycode == 100:
             try:
