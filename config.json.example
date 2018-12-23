@@ -1,0 +1,34 @@
+{
+    "fullscreen": false,
+    "_fs Must be one of": "[True, False, 'auto', 'fake']",
+    "size": [
+        1024,
+        768
+    ],
+    "_comment1": "proverbs中以列表（数组）的形式列出了会随机展示的格言，支持markup。",
+    "RandomProvider": {
+        "type": "range",
+        "rangeSettings": {
+            "range": [
+                1,
+                24
+            ]
+        },
+        "Highlights": [
+            {
+                "obj": 10,
+                "quantity": 15
+            },
+            {
+                "obj": 13,
+                "priv_proverbs": [
+                    "私有格言，只会在抽到该obj时展示。"
+                ]
+            }
+        ],
+        "proverbs": [
+            "随机格言1",
+            "随机格言2"
+        ]
+    }
+}

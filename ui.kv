@@ -30,6 +30,28 @@
                 text: '取消'
                 on_release: root.dismiss()
 
+<DebugPopup@Popup>:
+    auto_dismiss: True
+    title: 'Highlights Debug Informations'
+    on_open: app.set_debug_text(self)
+    size_hint: (0.5,0.5)
+    on_open: self.status = 'open'
+    on_dismiss: self.status = 'dismiss'
+    BoxLayout:
+        padding: 10
+        orientation: 'vertical'
+        TextInput:
+            id: debugText
+            text: 'Empty...'
+            readonly: True
+        BoxLayout:
+            size_hint_y: 0.3
+            spacing: 5
+            CnBtn:
+                text: '关闭'
+                on_release: root.dismiss()
+
+
 <MainWidget>:
     orientation: 'vertical'
     padding: 30
@@ -83,20 +105,20 @@
             step: 1
             on_value: root.svColor()
     CnLabel:
-        text: '“力度”值决定了抽取随机数的次数，力度越大，循环的次数越多。尽管不能提高熵但可以增加一定的观赏性。'
+        text: '“力度”值决定了抽取随机数的次数。'
         size_hint_y: 0.01
         shorten: True
     FloatLayout:
         pos: (0,self.height)
-        size_hint: 0.15,0.05
+        size_hint: 0.15,0.05            
         Label:
-            x: 0
-            text: 'Made by: Z4HD'
-            markup: True
             halign: 'left'
             valign: 'bottom'
+            x: self.width * 0.2
+            text: 'Made by: [i]Z4HD[/i]  Version: [i]%s[/i]' % root.version
+            markup: True
         CnLabel:
             x: Window.width - self.width*1.5
-            text: '透明度公示——已删除的号码：%s' % root.avoidList
+            text: '我做劲爆抽号软件，好吗？'
             halign: 'right'
             valign: 'bottom'
