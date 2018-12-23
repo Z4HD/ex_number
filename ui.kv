@@ -1,0 +1,102 @@
+#:kivy 1.10
+#:import Window kivy.core.window.Window
+#:import Factory kivy.factory.Factory
+#:import ut kivy.utils
+
+<CnLabel@Label>:
+    font_size: '20sp'
+
+<CnBtn@Button>:
+    font_size: '17sp'
+
+<ExitPopup@Popup>:
+    auto_dismiss: True
+    title: 'Warning'
+    size_hint: (0.3,0.25)
+    on_open: self.status = 'open'
+    on_dismiss: self.status = 'dismiss'
+    BoxLayout:
+        padding: 10
+        orientation: 'vertical'
+        CnLabel:
+            text: '真的要关闭么?'
+        BoxLayout:
+            size_hint_y: 0.3
+            spacing: 5
+            CnBtn:
+                text: '确定'
+                on_release: app.stop()
+            CnBtn:
+                text: '取消'
+                on_release: root.dismiss()
+
+<MainWidget>:
+    orientation: 'vertical'
+    padding: 30
+    spacing: 10
+    CnLabel:
+        id: proverbLabel
+        text: '小心点，下一个就是你！'
+        size_hint_y: .1
+	    font_size: '50sp'
+        markup: True
+    CnLabel:
+        id: numberLabel
+        text: '0'
+        markup: True
+        font_size: '300sp'
+        size_hint_y: .9
+    BoxLayout:
+        spacing: 10
+        size_hint_y: 0.2        
+        Button:
+            id: startBtn
+            text: 'Start !'
+            on_press: root.startBtnClick()
+	        font_size: '50sp'
+            size_hint_x: 0.8
+        Button:
+            text: 'Exit'
+            on_press: root.exitMsgBox.open()
+            font_size: '30sp'
+            size_hint_x: 0.2
+            color: ut.get_color_from_hex('#ff5722')
+    BoxLayout:
+        id: powBox
+        size_hint_y: 0.2
+        CnLabel:
+            text: '力度：'
+            size_hint_x: 0.1
+        CnLabel:
+            id: powLabel
+            text: str(powSlider.value)
+            size_hint_x: 0.1
+            color: [255,1,1,1]
+        
+        Slider:
+            id: powSlider
+            max: 200
+            value: 20
+            min: 1
+            value_track: True
+            size_hint_x: 0.8
+            step: 1
+            on_value: root.svColor()
+    CnLabel:
+        text: '“力度”值决定了抽取随机数的次数，力度越大，循环的次数越多。尽管不能提高熵但可以增加一定的观赏性。'
+        size_hint_y: 0.01
+        shorten: True
+    FloatLayout:
+        pos: (0,self.height)
+        size_hint: 0.15,0.05
+        Label:
+            x: 0
+            text: 'Made by: Z4HD'
+            markup: True
+            halign: 'left'
+            valign: 'bottom'
+        CnLabel:
+            x: Window.width - self.width*1.5
+            text: '透明度公示——已删除的号码：%s' % root.avoidList
+            halign: 'right'
+            valign: 'bottom'
