@@ -22,7 +22,7 @@ from kivy.uix.boxlayout import BoxLayout
 
 kivy.require('1.10.0')
 versionStr = "v251"
-Logger.info("randEX: Version: "+versionStr)
+Logger.info("randEX: Version: " + versionStr)
 
 # 加载设置和初始化
 rCount = 1
@@ -57,6 +57,7 @@ else:
 
 # Random tools
 
+
 class ZRandom():
     '''
     Provider -> Handler -> get()
@@ -72,7 +73,7 @@ class ZRandom():
             self.randomList = self._rangeProvider()
         else:
             raise ValueError('Unsupport provider type')
-        # highlighting
+        # Highlighting
         self.randomList = self._highlightHandler(self.randomList)
 
     def _fileProvider(self, parameter_list):
@@ -144,7 +145,6 @@ class MainWidget(BoxLayout):
             raise
         if self.zr.avoidList:
             Logger.info('ZRandom: %s has been removed.' % self.zr.avoidList)
-        # self.debugMsgBox.text = pprint.pformat(self.zr.HighlightsSettings)
 
     global conf
     global versionStr
@@ -164,7 +164,7 @@ class MainWidget(BoxLayout):
             except AttributeError:
                 self.exitMsgBox.open()
             return True
-        # enter to start a rand process
+        # Press enter to start a rand process
         elif keycode == 271 or keycode == 13 or keycode == 32:
             if rCount != 1:
                 Logger.info("KBC: a rand_ex() process already running")
@@ -173,6 +173,7 @@ class MainWidget(BoxLayout):
                 Logger.info(
                     "KBC: a rand_ex() process start by <Enter> or <Space>")
                 self.startBtnClick()
+        # Press D to show debug Popup
         elif keycode == 100:
             try:
                 if self.debugMsgBox.status == 'open':
@@ -202,13 +203,13 @@ class MainWidget(BoxLayout):
         powBox.disabled = True
         sb1.disabled = True
         pLabel.text = ''
-        lb.text = str(self.zr.getObj())  # Get random INT
+        lb.text = str(self.zr.getObj())  # Get random Obj
         if rCount == pow1:
             # 结束设置
             rCount = 1
             powBox.disabled = False
             sb1.disabled = False
-            pLabel.text = self.zr.getProverb(lb.text)
+            pLabel.text = self.zr.getProverb(lb.text)  # Get proverb
             return False
         else:
             rCount += 1
@@ -252,6 +253,7 @@ class MainApp(App):
         return MainWidget()
 
     def set_debug_text(self, popup):
+        "Press D to show the Popup"
         popup.ids['debugText'].text = json.dumps(
             conf['RandomProvider']['Highlights'], indent=4, ensure_ascii=False)
 
